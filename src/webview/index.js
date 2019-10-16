@@ -11,14 +11,24 @@ export default (url, callback) => {
     webview.loadUrl(url)
 
     const webcc = new JavaAdapter(WebChromeClient, {
-        onJsPrompt: function (webView, url, fnName, defaultValue, jsPromptResult) {
+        onJsPrompt: function (view, url, fnName, defaultValue, jsPromptResult) {
 
             callback(fnName, defaultValue)
 
             jsPromptResult.confirm()
             return true
+        },
+        onReceivedHttpError: function (view, request, error) {
+            log('error', error)
+        },
+        onReceivedError: function (view, errorCode, desc, failingUrl) {
+            log('error', desc)
+        },
+        onConsoleMessage: function (msg) {
+            log('msg', msg.message())
         }
     })
-    webview.setWebChromeClient(webcc)
 
+    webview.setWebChromeClient(webcc)
+    return webview
 }
