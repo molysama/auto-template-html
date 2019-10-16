@@ -19,13 +19,13 @@ export default (url, callback) => {
             return true
         },
         onReceivedHttpError: function (view, request, error) {
-            log('error', error)
+            log(error)
         },
         onReceivedError: function (view, errorCode, desc, failingUrl) {
-            log('error', desc)
+            log(error)
         },
         onConsoleMessage: function (msg) {
-            log('msg', msg.message())
+            log(msg.message())
         }
     })
 
