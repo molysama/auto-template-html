@@ -13,7 +13,7 @@ export default (url, callback) => {
     const webcc = new JavaAdapter(WebChromeClient, {
         onJsPrompt: function (view, url, fnName, defaultValue, jsPromptResult) {
 
-            callback(fnName, defaultValue)
+            callback(fnName, defaultValue, webview)
 
             jsPromptResult.confirm()
             return true

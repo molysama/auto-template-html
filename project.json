@@ -1,5 +1,5 @@
 {
-    "name": "重装战姬",
+    "name": "Example",
     "main": "main.js",
     "ignore": [
         "build",
@@ -12,7 +12,11 @@
         "package.json",
         "webpack.config.js"
     ],
-    "packageName": "com.molysama.zzzj",
+    "launchConfig": {
+        "hideLogs": false,
+        "stableMode": true
+    },
+    "packageName": "com.example.hello",
     "versionName": "1.0.0",
     "versionCode": 1
 }

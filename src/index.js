@@ -1,8 +1,10 @@
-import webview from '@/webview'
+import WebView from '@/webview'
 import {click} from '@/tools'
 
-webview('http://www.baidu.com', (fnName, value) => {
-    this[fnName]
+WebView('http://www.baidu.com', (fnName, value, webview) => {
+    log(fnName)
+    log(value)
+    hello()
 })
 
 function hello () {
