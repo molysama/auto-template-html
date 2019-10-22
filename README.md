@@ -9,3 +9,6 @@ npm start
 ```
 
 F1 + 运行项目，即可在模拟器或手机上运行本项目
+
+# LICENSE
+MIT
