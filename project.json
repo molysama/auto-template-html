@@ -1,5 +1,6 @@
 {
     "name": "Example",
+    "mainScriptFile": "main.js",
     "main": "main.js",
     "ignore": [
         "build",
@@ -13,7 +14,7 @@
         "webpack.config.js"
     ],
     "launchConfig": {
-        "hideLogs": false,
+        "hideLogs": true,
         "stableMode": true
     },
     "packageName": "com.example.hello",
