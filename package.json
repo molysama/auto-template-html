@@ -17,9 +17,9 @@
     "webpack-cli": "^3.3.0"
   },
   "dependencies": {
-    "@auto.pro/action": "^7.2.0",
-    "@auto.pro/core": "^7.2.0",
-    "@auto.pro/search": "^7.3.1",
+    "@auto.pro/core": "^7.x",
+    "@auto.pro/action": "^7.x",
+    "@auto.pro/search": "^7.x",
     "@babel/polyfill": "^7.4.0",
     "es6-shim": "^0.35.5"
   }

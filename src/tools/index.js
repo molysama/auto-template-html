@@ -1,6 +1,6 @@
 import Core from '@auto.pro/core'
 
-import Action, {useAction} from '@auto.pro/action'
+import Action, {click, swipe} from '@auto.pro/action'
 import Seacth, {findImg, hasAnyColors, hasMulColors, noAnyColors} from '@auto.pro/search'
 
 const core = Core({
@@ -11,8 +11,6 @@ const core = Core({
 
 core.use(Action)
 core.use(Seacth)
-
-const {click, swipe} = useAction()
 
 const tap = click
 const scale = core.scale
