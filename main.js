@@ -13,4 +13,4 @@ ui.layout(
     </linear>
 )
 
-require('dist/build')
+require('dist/app')

@@ -1,23 +1,29 @@
 const path = require('path')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
-    entry: ['./src/index.js'],
+    entry: {
+        app: './src/index.js'
+    },
     output: {
-        filename: 'build.js',
+        filename: '[name].js',
         path: path.resolve(__dirname, 'dist')
     },
     target: 'node',
 
-    // devtool: 'inline-source-map',
-    // mode: 'development',
     mode: 'production',
     plugins: [
-        // new JavaScriptObfuscator(),
         new CleanWebpackPlugin(),
     ],
     module: {
         rules: [
+            {
+                test: /\.ts$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'ts-loader'
+                }       
+            },
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
@@ -34,7 +40,7 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.js'],
+        extensions: ['.js', '.ts', '.json'],
         alias: {
             '@': path.resolve(__dirname, 'src')
         }

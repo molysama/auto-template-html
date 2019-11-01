@@ -2,6 +2,11 @@
     "name": "Example",
     "mainScriptFile": "main.js",
     "main": "main.js",
+    "launchConfig": {
+        "hideLogs": true,
+        "stableMode": true,
+        "splashText": "AUTO.PRO"
+    },
     "ignore": [
         "build",
         "node_modules",
@@ -9,14 +14,14 @@
         "test",
         ".babelrc",
         "jsconfig.json",
+        "tsconfig.json",
         "package-lock.json",
         "package.json",
-        "webpack.config.js"
+        "webpack.config.js",
+        "LICENSE",
+        "README.md",
+        ".gitignore"
     ],
-    "launchConfig": {
-        "hideLogs": true,
-        "stableMode": true
-    },
     "packageName": "com.example.hello",
     "versionName": "1.0.0",
     "versionCode": 1
