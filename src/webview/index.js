@@ -22,7 +22,7 @@ export default (url, callback) => {
             log(error)
         },
         onReceivedError: function (view, errorCode, desc, failingUrl) {
-            log(error)
+            log(desc)
         },
         onConsoleMessage: function (msg) {
             log(msg.message())
