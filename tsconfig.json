@@ -14,7 +14,6 @@
     "target": "es5",// 转化成的目标语言
     "baseUrl": "./",
     "types": [
-      "node"
     ],
     "typeRoots": [
       "./node_modules/@types"
