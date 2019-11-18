@@ -22,7 +22,7 @@
     "lib": [
       "es2015"
     ],
-    "allowJs": false,
+    "allowJs": true,
     "paths": {
       "@/*": ["src/*"]
     }
