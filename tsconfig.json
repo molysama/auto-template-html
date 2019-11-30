@@ -27,7 +27,7 @@
     }
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*"
   ],// 要打包的文件
   "exclude": [
     "node_modules",
