@@ -3,6 +3,7 @@
 ui.statusBarColor('#000000')
 
 importClass(android.webkit.WebView)
+importClass(android.webkit.ValueCallback)
 importClass(android.webkit.WebChromeClient)
 importClass(android.webkit.WebResourceResponse)
 importClass(android.webkit.WebViewClient)

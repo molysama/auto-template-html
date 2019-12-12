@@ -13,16 +13,16 @@ export default (url, callback) => {
     const webcc = new JavaAdapter(WebChromeClient, {
         onJsPrompt: function (view, url, fnName, defaultValue, jsPromptResult) {
 
-            callback(fnName, defaultValue, webview)
+            callback(fnName, defaultValue)
 
             jsPromptResult.confirm()
             return true
         },
         onReceivedHttpError: function (view, request, error) {
-            log(error)
+            log('webview http error', error)
         },
         onReceivedError: function (view, errorCode, desc, failingUrl) {
-            log(desc)
+            log('webview error', desc)
         },
         onConsoleMessage: function (msg) {
             log(msg.message())
@@ -30,5 +30,19 @@ export default (url, callback) => {
     })
 
     webview.setWebChromeClient(webcc)
-    return webview
+    return {
+        webview,
+        runHtmlFunction (fnName, value) {
+            return new Promise((resolve, reject) => {
+                webview.evaluateJavascript(`javascript:${fnName}(${value})`, new JavaAdapter(ValueCallback, {
+                    onReceiveValue (result) {
+                        resolve(result)
+                    },
+                    onReceivedError (error) {
+                        reject(error)
+                    } 
+                }))
+            })
+        }
+    }
 }
