@@ -1,23 +1,26 @@
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin')
 const JavascriptObfuscator = require('webpack-obfuscator')
 
 module.exports = {
     entry: {
-        app: './src/index.js'
+        bundle: path.resolve(__dirname, '../src/html/index.js'),
     },
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, 'dist'),
-        libraryTarget: 'commonjs2'
+        path: path.resolve(__dirname, '../dist'),
+        libraryTarget: 'umd'
     },
-    target: 'node',
-
+    target: 'web',
     mode: 'production',
     plugins: [
-        new CleanWebpackPlugin(),
         new JavascriptObfuscator({
-            compact: true
+            // 压缩
+            compact: true,
+            // 转义为Unicode，会大大增加字符串体积，还原也比较容易，可选择性开启
+            unicodeEscapeSequence: true,
             // // 压缩
             // compact: true,
             // // 控制流扁平化（降低50%速度）
@@ -71,6 +74,21 @@ module.exports = {
             // transformObjectKeys: false,
             // // 转义为Unicode，会大大增加体积，还原也比较容易，建议只对小文件使用
             // unicodeEscapeSequence: false
+        }),
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, '../src/html/index.html'),
+            chunks: ['bundle'],
+            inject: true,
+            inlineSource: '.(js|css)$'
+        }),
+        new HtmlWebpackInlineSourcePlugin(),
+        new CleanWebpackPlugin({
+            cleanStaleWebpackAssets: false,
+            protectWebpackAssets: false,
+            cleanOnceBeforeBuildPatterns: [],
+            cleanAfterEveryBuildPatterns: [
+                'bundle.js'
+            ]
         })
     ],
     module: {
@@ -80,7 +98,7 @@ module.exports = {
                 exclude: /node_modules/,
                 use: {
                     loader: 'ts-loader'
-                }       
+                }
             },
             {
                 test: /\.js$/,
@@ -100,7 +118,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.ts', '.json'],
         alias: {
-            '@': path.resolve(__dirname, 'src')
+            '@': path.resolve(__dirname, '../src')
         }
     }
 }

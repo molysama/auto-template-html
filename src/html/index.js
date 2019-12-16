@@ -1,41 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>WebView Example</title>
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-        }
-        canvas {
-            display: block;
-            width: 100vw;
-            height: 100vh;
-        }
-    </style>
-</head>
-<body>
-    <canvas id="c"></canvas>
-</body>
-<script crossorigin="anonymous" integrity="sha384-BnFYVbw3PHhz5qWXTCSL12MjPc3KxjdKPx7R4R5JjIzxFmYX267NDyJ9B/nZANdg" src="https://lib.baomitu.com/animejs/latest/anime.min.js"></script>
-<script>
+// 本示例将callAuto绑定在点击事件61行里，每次点击都会向auto传值
 
-var example = 'EXAMPLE'
-
-// 供auto执行的函数
-function fromAuto (str) {
-    let result = 'result ' + str
-    toAuto(result)
-    return result
-}
-
-// 向auto传递事件，将fnName指定为'toast'
-// 此方法绑定于下方86行的点击事件里
-function toAuto (val) {
-    prompt('toast', val)
+/**
+ * 向auto传递参数，并返回auto的执行结果
+ * @param {string} fnName
+ * @param {*} value
+*/
+function callAuto(fnName, value) {
+  let result = prompt(fnName, value && JSON.stringify(value))
+  return result && JSON.parse(result)
 }
 
 var c = document.getElementById("c");
@@ -74,17 +46,19 @@ function calcPageFillRadius(x, y) {
 }
 
 function addClickListeners() {
-  document.addEventListener("touchstart", handleEvent);
+  // document.addEventListener("touchstart", handleEvent);
   document.addEventListener("mousedown", handleEvent);
 };
 
+let obj = { name: 100 }
 function handleEvent(e) {
     if (e.touches) { 
       e.preventDefault();
       e = e.touches[0];
     }
 
-    toAuto('click!')
+    obj.name++
+    callAuto('toast', obj)
 
     var currentColor = colorPicker.current();
     var nextColor = colorPicker.next();
@@ -249,5 +223,5 @@ function fauxClick(x, y) {
   fauxClick.pageY = y;
   document.dispatchEvent(fauxClick);
 }
-</script>
-</html>
+
+console.log('hello,html')
