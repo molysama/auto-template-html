@@ -26,7 +26,9 @@ html 的本地源码可以在`src/html`文件夹内编写，已经做好打包�
 ## 通讯
 
 html 通过`prompt`函数向 auto 发送事件，`prompt`要携带参数的话必须给参数加上`JSON.stringify`处理（如示例）  
-auto 通过`wv.on('xxx', Function)来监听事件，耗时操作需要开新线程 auto可通过`wv.runHtmlFunction('xxx')`来执行html的函数，并得到一个`Promise`类型的返回值 由于本程序添加了代码混淆处理，请确保执行时能找到正确的函数名（如挂载到html的`window```上）
+auto 通过`wv.on('xxx', Function)`来监听事件，耗时操作需要开新线程  
+auto 可通过`wv.runHtmlFunction('xxx')`来执行 html 的函数，并得到一个`Promise`类型的返回值  
+由于本程序添加了代码混淆处理，请确保执行时能找到正确的函数名（如挂载到 html 的`window```上）
 
 # LICENSE
 
