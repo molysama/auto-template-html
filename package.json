@@ -30,7 +30,9 @@
         "@auto.pro/action": "^8.x",
         "@auto.pro/core": "^8.x",
         "@auto.pro/search": "^8.x",
+        "@auto.pro/webview": "^8.x",
         "@babel/polyfill": "^7.4.0",
-        "es6-shim": "^0.35.5"
+        "es6-shim": "^0.35.5",
+        "rxjs": "^6.5.5"
     }
 }
