@@ -10,6 +10,7 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "@auto.pro/webpack-plugin": "^8.6.0",
         "@babel/core": "^7.4.0",
         "@babel/plugin-transform-modules-commonjs": "^7.7.4",
         "@babel/plugin-transform-runtime": "^7.6.2",
@@ -30,7 +31,7 @@
         "@auto.pro/action": "^8.x",
         "@auto.pro/core": "^8.x",
         "@auto.pro/search": "^8.x",
-        "@auto.pro/webview": "^8.4.3",
+        "@auto.pro/webview": "^8.x",
         "@babel/polyfill": "^7.4.0",
         "es6-shim": "^0.35.5",
         "rxjs": "^6.5.5"

@@ -1,5 +1,6 @@
 const path = require("path")
 const JavascriptObfuscator = require("webpack-obfuscator")
+const AutoProWebpackPlugin = require('@auto.pro/webpack-plugin')
 
 const dictionary = []
 for (let i = 128; i < 200; i++) {
@@ -30,6 +31,16 @@ module.exports = {
             target: "browser-no-eval",
             unicodeEscapeSequence: false,
             transformObjectKeys: true
+        }),
+        new AutoProWebpackPlugin({
+            // 数组内是需要ui的文件名，与上面的entry对应
+            // ui: ['app'],
+
+            // key，加密密钥，需要注意密钥长度，算法有要求，建议与示例一个长度
+            // type: 'pkcs7'(默认) | 'pkcs5'，加密方式
+            // encode: {
+            //     key: 'Secret Passphrase',
+            // }
         })
     ],
     module: {
