@@ -1,7 +1,7 @@
 {
     "name": "Example",
-    "mainScriptFile": "main.js",
-    "main": "main.js",
+    "mainScriptFile": "dist/app.js",
+    "main": "dist/app.js",
     "launchConfig": {
         "hideLogs": true,
         "stableMode": true,

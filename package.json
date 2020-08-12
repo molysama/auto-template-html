@@ -4,8 +4,8 @@
     "private": true,
     "description": "",
     "scripts": {
-        "start": "npx webpack --config config/index.js --watch",
-        "build": "npx webpack --config config/index.js"
+        "start": "npx webpack --config config/index.js --watch --mode=development",
+        "build": "npx webpack --config config/index.js --mode=production"
     },
     "author": "",
     "license": "ISC",
@@ -28,12 +28,11 @@
         "webpack-obfuscator": "^0.25.4"
     },
     "dependencies": {
-        "@auto.pro/action": "^8.x",
         "@auto.pro/core": "^8.x",
-        "@auto.pro/search": "^8.x",
         "@auto.pro/webview": "^8.x",
         "@babel/polyfill": "^7.4.0",
         "es6-shim": "^0.35.5",
-        "rxjs": "^6.5.5"
+        "rxjs": "^6.5.5",
+        "uuid-js": "^0.7.5"
     }
 }

@@ -1,7 +1,8 @@
 // 由于开启了混淆，为防止找不到对应的函数名，将函数挂载到window上
+import uuidjs from 'uuid-js'
 
 function test() {
-    return "希望代码没事"
+    return uuidjs.create(4).toString()
 }
 
 window["run"] = function () {

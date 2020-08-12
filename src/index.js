@@ -1,6 +1,6 @@
 import { wv } from "@/system"
 
-// 监听html的run事件
+// 监听html的run事件，也就是html的prompt('run', value)
 wv.on("run", (value) => {
     toastLog("这是一个auto的方法，得到了run的结果：" + value)
 
