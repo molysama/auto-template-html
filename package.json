@@ -10,7 +10,7 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "@auto.pro/webpack-plugin": "^8.6.0",
+        "@auto.pro/webpack-plugin": "latest",
         "@babel/core": "^7.4.0",
         "@babel/plugin-transform-modules-commonjs": "^7.7.4",
         "@babel/plugin-transform-runtime": "^7.6.2",
@@ -28,8 +28,8 @@
         "webpack-obfuscator": "^0.25.4"
     },
     "dependencies": {
-        "@auto.pro/core": "^8.x",
-        "@auto.pro/webview": "^8.x",
+        "@auto.pro/core": "latest",
+        "@auto.pro/webview": "latest",
         "@babel/polyfill": "^7.4.0",
         "es6-shim": "^0.35.5",
         "rxjs": "^6.5.5",
