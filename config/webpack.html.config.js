@@ -1,7 +1,5 @@
 const path = require("path")
-const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
-const HtmlWebpackInlineSourcePlugin = require("html-webpack-inline-source-plugin")
 const JavascriptObfuscator = require("webpack-obfuscator")
 
 const dictionary = []
@@ -36,10 +34,24 @@ const config = {
                 },
             },
             {
-                test: /\.(png|svg|jpg|gif)$/,
-                use: {
-                    loader: "url-loader",
-                },
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.(png|svg|jpe?g|gif|svg)$/i,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            // 100k以下的图片使用base64嵌入到html中
+                            limit: 1024 * 100
+                        }
+                    }
+                ],
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/i,
+                loader: 'file-loader',
             },
         ],
     },
@@ -59,43 +71,26 @@ module.exports = (env, argv) => {
         config.plugins = [
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, "../src/html/index.html"),
-                chunks: ["bundle"],
-                inject: true,
-                inlineSource: ".(js|css)$",
-            }),
-            new HtmlWebpackInlineSourcePlugin(),
-            new CleanWebpackPlugin({
-                cleanStaleWebpackAssets: false,
-                protectWebpackAssets: false,
-                cleanOnceBeforeBuildPatterns: [],
-                cleanAfterEveryBuildPatterns: ["bundle.js"],
             })
         ]
+        config.devServer = {
+            contentBase: path.join(__dirname, '../dist'),
+            port: 9000
+        }
     } else {
         config.plugins = [
+            new HtmlWebpackPlugin({
+                template: path.resolve(__dirname, "../src/html/index.html"),
+            }),
             new JavascriptObfuscator({
                 compact: true,
                 identifierNamesGenerator: "dictionary",
                 identifiersDictionary: dictionary,
                 // 生成的代码环境，可选browser、browser-no-eval、node
-                target: "browser-no-eval",
+                target: "browser",
                 // 转义为Unicode，会大大增加体积，还原也非常容易，建议只对小文件使用
                 unicodeEscapeSequence: false,
-            }),
-            new HtmlWebpackPlugin({
-                template: path.resolve(__dirname, "../src/html/index.html"),
-                chunks: ["bundle"],
-                inject: true,
-                inlineSource: ".(js|css)$",
-            }),
-            new HtmlWebpackInlineSourcePlugin(),
-            new CleanWebpackPlugin({
-                cleanStaleWebpackAssets: false,
-                protectWebpackAssets: false,
-                cleanOnceBeforeBuildPatterns: [],
-                cleanAfterEveryBuildPatterns: ["bundle.js"],
             })
-
         ]
     }
 

@@ -20,15 +20,58 @@ F1 + 运行项目，即可在模拟器或手机上运行本项目
 
 ## html 相关
 
-如果不需要本地 html，可以注释掉`config/index.js`文件的`htmlConfig`，`system/index.js`里的`run`可直接用线上网站地址  
-html 的本地源码可以在`src/html`文件夹内编写，已经做好打包处理
+-   如果想将 html 打包在 app 内，可以在`src/html`文件夹内写代码（当然也可以另起一个 web 项目，编译后放到此项目）
+-   调试本地 html  
+    执行`npm run html`，并在浏览器中打开`localhost:9000`可以实时调试本地 hmlt
+-   编译 html  
+    执行`npm run build`，会同时编译 auto 的代码和 html 代码，在`dist`目录下生成编译文件
 
 ## 通讯
 
-html 通过`prompt`函数向 auto 发送事件，`prompt`要携带参数的话必须给参数加上`JSON.stringify`处理（如示例）  
-auto 通过`wv.on('xxx', Function)`来监听事件，耗时操作需要开新线程  
-auto 可通过`wv.runHtmlFunction('xxx')`来执行 html 的函数，并得到一个`Promise`类型的返回值  
-由于本程序添加了代码混淆处理，请确保执行时能找到正确的函数名（如挂载到 html 的`window```上）
+### html 向 auto 发送事件
+
+webview 可以自定义浏览器事件，因此我们可以拦截一些不常用事件，通过魔改这些事件来传值和执行安卓代码，这就是所谓的 JsBridge。在本项目里使用的是`prompt`事件来传递。
+
+举栗说明：
+
+```javascript
+// html部分
+document.getElementById("btn").onclick = function () {
+    prompt("submit", JSON.stringify("molysama"))
+}
+
+// auto部分
+import { run } from "@auto.pro/webview"
+run("file://" + files.path("dist/index.html")).subscribe((wv) => {
+    wv.on("submit").subscribe(([param, done]) => {
+        // done可以主动返回一个值给html，作为prompt('submit')的结果
+        // 这里啥都没传，所以结果是undefined
+        done()
+
+        // param是传过来的参数，也就是html部分的'molysama'
+        toastLog("接受到参数：" + param)
+    })
+})
+```
+
+### auto 向 html 发送事件
+
+auto 执行 html 的代码原理就很简单了，就是直接通过 webview 来执行一段代码
+
+```javascript
+import { run } from "@auto.pro/webview"
+run("file://" + files.path("dist/index.html")).subscribe((wv) => {
+    // 在html里执行document.title，获取到标题并返回
+    wv.runHtmlJS("document.title").subscribe((value) => {
+        toastLog(`title是${value}`)
+    })
+
+    // 在html里执行run，并传递两个参数
+    wv.runHtmlFunction("run", "hello", "world").subscribe((value) => {})
+})
+```
+
+由于本项目添加了代码混淆处理，html 内的变量名可能会被混淆，导致通讯时找不到对应的函数，请确保执行时能找到正确的函数名（如把变量挂载到 html 的`window`对象上）
 
 # LICENSE
 

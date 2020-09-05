@@ -1,36 +1,37 @@
-import { fromEvent, race, timer, of } from "rxjs"
-import { share, exhaustMap, tap, map } from "rxjs/operators"
 
-import Core, { use } from "@auto.pro/core"
-import WebViewPlugin, { run } from "@auto.pro/webview"
+import core, { closeForeground, setSystemUiVisibility, effect$ } from '@auto.pro/core'
+import { run } from '@auto.pro/webview'
+import { fromEvent } from 'rxjs'
 
-ui.statusBarColor('#000000')
-
-Core({
-    // 是否需要无障碍服务
-    needService: true,
-    // 是否需要截图服务
+core({
+    baseWidth: 960,
+    baseHeight: 540,
     needCap: true,
+    needFloaty: true
+    // needService: true,
+    // needForeground: true,
 })
 
-use(WebViewPlugin)
+export const webview = run('file://' + files.path('assets/index.html'), {
+    afterLayout() {
+        setSystemUiVisibility('有状态栏的沉浸式界面')
+    }
+})
 
-const htmlPath = "file:" + files.path("dist/index.html")
-// const htmlPath = 'http://www.baidu.com'
+// 监听退出事件，关闭前台服务
+events.on('exit', () => {
+    closeForeground()
+})
 
-export const wv = run(htmlPath)
-
-// 监听返回键
+// 监听返回键并共享事件
 const back$ = fromEvent(ui.emitter, "back_pressed").pipe(share())
-back$
-    .pipe(
-        exhaustMap((e) => {
-            toast("再次返回可退出")
-            e.consumed = true
-            return race(
-                back$.pipe(tap(() => (e.consumed = false))),
-                timer(2000)
-            )
-        })
-    )
-    .subscribe()
+back$.pipe(
+    exhaustMap((e) => {
+        toast("再次返回可退出")
+        e.consumed = true
+        return race(
+            back$.pipe(tap(() => (e.consumed = false))),
+            timer(2000)
+        )
+    })
+).subscribe()
