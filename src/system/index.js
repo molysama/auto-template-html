@@ -1,7 +1,8 @@
 
-import core, { closeForeground, setSystemUiVisibility, effect$ } from '@auto.pro/core'
+import core, { closeForeground, setSystemUiVisibility } from '@auto.pro/core'
 import { run } from '@auto.pro/webview'
-import { fromEvent } from 'rxjs'
+import { fromEvent, race, timer } from 'rxjs'
+import { share, exhaustMap, tap } from 'rxjs/operators'
 
 core({
     baseWidth: 960,
