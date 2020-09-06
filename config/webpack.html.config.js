@@ -1,6 +1,10 @@
 const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const JavascriptObfuscator = require("webpack-obfuscator")
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const TerserJSPlugin = require('terser-webpack-plugin')
+const ProgressPlugin = require('progress-bar-webpack-plugin')
 
 const dictionary = []
 for (let i = 128; i < 200; i++) {
@@ -12,7 +16,7 @@ const config = {
         bundle: path.resolve(__dirname, "../src/html/index.js"),
     },
     output: {
-        filename: "[name].js",
+        filename: "js/[name].js",
         path: path.resolve(__dirname, "../dist"),
         libraryTarget: "umd",
     },
@@ -35,7 +39,10 @@ const config = {
             },
             {
                 test: /\.css$/i,
-                use: ['style-loader', 'css-loader']
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                ]
             },
             {
                 test: /\.(png|svg|jpe?g|gif|svg)$/i,
@@ -44,7 +51,8 @@ const config = {
                         loader: 'url-loader',
                         options: {
                             // 100k以下的图片使用base64嵌入到html中
-                            limit: 1024 * 100
+                            limit: 1024 * 100,
+                            name: 'img/[name].[ext]?[hash]'
                         }
                     }
                 ],
@@ -52,6 +60,9 @@ const config = {
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/i,
                 loader: 'file-loader',
+                options: {
+                    name: 'font/[name].[ext]?[hash]'
+                }
             },
         ],
     },
@@ -71,26 +82,41 @@ module.exports = (env, argv) => {
         config.plugins = [
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, "../src/html/index.html"),
-            })
+            }),
+            new MiniCssExtractPlugin()
         ]
         config.devServer = {
             contentBase: path.join(__dirname, '../dist'),
             port: 9000
         }
     } else {
+        config.optimization = {
+            minimize: true,
+            minimizer: [
+                new TerserJSPlugin(),
+                new OptimizeCssAssetsPlugin(),
+                new ProgressPlugin()
+            ]
+        }
         config.plugins = [
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, "../src/html/index.html"),
+            }),
+            new MiniCssExtractPlugin({
+                filename: 'css/[name].css',
+                chunkFilename: '[id].css',
+                ignoreOrder: false
             }),
             new JavascriptObfuscator({
                 compact: true,
                 identifierNamesGenerator: "dictionary",
                 identifiersDictionary: dictionary,
-                // 生成的代码环境，可选browser、browser-no-eval、node
                 target: "browser",
-                // 转义为Unicode，会大大增加体积，还原也非常容易，建议只对小文件使用
-                unicodeEscapeSequence: false,
-            })
+                transformObjectKeys: false,
+                stringArray: true,
+                stringArrayEncoding: ['rc4'],
+            }),
+            new ProgressPlugin()
         ]
     }
 
