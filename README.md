@@ -37,13 +37,18 @@ webview 可以自定义浏览器事件，因此我们可以拦截一些不常用
 ```javascript
 // html部分
 document.getElementById("btn").onclick = function () {
-    prompt("submit", JSON.stringify("molysama"))
+    // result的值由done()的参数传过来
+    var result = prompt("submit", JSON.stringify("molysama"))
+    // alert(result)
 }
 
 // auto部分
 import { run } from "@auto.pro/webview"
-run("file://" + files.path("dist/index.html")).subscribe((wv) => {
-    wv.on("submit").subscribe(([param, done]) => {
+const webview = run("file://" + files.path("dist/index.html"))
+
+effect$.subscribe(() => {
+    // 监听放在effect里，只有当权限到位后，监听才生效
+    webview.on("submit").subscribe(([param, done]) => {
         // done可以主动返回一个值给html，作为prompt('submit')的结果
         // 这里啥都没传，所以结果是undefined
         done()
