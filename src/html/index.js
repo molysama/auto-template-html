@@ -6,7 +6,8 @@ import uuidjs from 'uuid-js'
 
 document.getElementById("submit").onclick = function () {
     // 执行prompt前，务必要用JSON.stringify转一次，无论任何变量类型!!!
-    prompt("submit", JSON.stringify(uuidjs.create(4).toString()))
+    var result = prompt("submit", JSON.stringify(uuidjs.create(4).toString()))
+    alert('submit result: ' + result)
 }
 
 window["run"] = function (param1, param2) {

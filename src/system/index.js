@@ -5,8 +5,8 @@ import { fromEvent, race, timer } from 'rxjs'
 import { share, exhaustMap, tap } from 'rxjs/operators'
 
 core({
-    baseWidth: 960,
-    baseHeight: 540,
+    baseWidth: 1280,
+    baseHeight: 720,
     needCap: true,
     needFloaty: true
     // needService: true,

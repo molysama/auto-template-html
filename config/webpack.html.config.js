@@ -16,7 +16,7 @@ const config = {
         bundle: path.resolve(__dirname, "../src/html/index.js"),
     },
     output: {
-        filename: "js/[name].js",
+        filename: "js/[name].[hash].js",
         path: path.resolve(__dirname, "../dist"),
         libraryTarget: "umd",
     },
@@ -52,7 +52,7 @@ const config = {
                         options: {
                             // 100k以下的图片使用base64嵌入到html中
                             limit: 1024 * 100,
-                            name: 'img/[name].[ext]?[hash]'
+                            name: 'img/[name].[hash:8].[ext]'
                         }
                     }
                 ],
@@ -61,7 +61,7 @@ const config = {
                 test: /\.(woff|woff2|eot|ttf|otf)$/i,
                 loader: 'file-loader',
                 options: {
-                    name: 'font/[name].[ext]?[hash]'
+                    name: 'font/[name].[hash:8].[ext]'
                 }
             },
         ],

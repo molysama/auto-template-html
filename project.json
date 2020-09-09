@@ -1,5 +1,5 @@
 {
-    "name": "Example",
+    "name": "Html Example",
     "mainScriptFile": "dist/app.js",
     "main": "dist/app.js",
     "launchConfig": {
@@ -23,7 +23,7 @@
         "README.md",
         ".gitignore"
     ],
-    "packageName": "com.example.hello",
+    "packageName": "com.example.html",
     "versionName": "1.0.0",
     "versionCode": 1
 }
