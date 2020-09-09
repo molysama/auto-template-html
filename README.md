@@ -35,14 +35,15 @@ webview 可以自定义浏览器事件，因此我们可以拦截一些不常用
 举栗说明：
 
 ```javascript
-// html部分
+// html部分--------------------
 document.getElementById("btn").onclick = function () {
     // result的值由done()的参数传过来
     var result = prompt("submit", JSON.stringify("molysama"))
     // alert(result)
 }
 
-// auto部分
+// auto部分---------------------
+import { effect$ } from "@auto.pro/core"
 import { run } from "@auto.pro/webview"
 const webview = run("file://" + files.path("dist/index.html"))
 
@@ -61,18 +62,21 @@ effect$.subscribe(() => {
 
 ### auto 向 html 发送事件
 
-auto 执行 html 的代码原理就很简单了，就是直接通过 webview 来执行一段代码
+auto 执行 html 的代码原理就很简单了，直接通过 webview 来执行一段代码
 
 ```javascript
+import { effect$ } from "@auto.pro/core"
 import { run } from "@auto.pro/webview"
-run("file://" + files.path("dist/index.html")).subscribe((wv) => {
+
+const webview = run("file://" + files.path("dist/index.html"))
+effect$.subscribe(() => {
     // 在html里执行document.title，获取到标题并返回
-    wv.runHtmlJS("document.title").subscribe((value) => {
+    webview.runHtmlJS("document.title").subscribe((value) => {
         toastLog(`title是${value}`)
     })
 
     // 在html里执行run，并传递两个参数
-    wv.runHtmlFunction("run", "hello", "world").subscribe((value) => {})
+    webview.runHtmlFunction("run", "hello", "world").subscribe((value) => {})
 })
 ```
 
