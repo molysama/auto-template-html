@@ -37,16 +37,12 @@ const config = {
             {
                 test: /\.ts$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: "ts-loader"
-                }
+                use: ['ts-loader', '@auto.pro/webpack-loader']
             },
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader"
-                }
+                use: ['babel-loader', '@auto.pro/webpack-loader']
             },
             {
                 test: /\.(png|svg|jpg|gif)$/,
