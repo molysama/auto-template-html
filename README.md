@@ -22,7 +22,7 @@ F1 + 运行项目，即可在模拟器或手机上运行本项目
 
 -   如果想将 html 打包在 app 内，可以在`src/html`文件夹内写代码（当然也可以另起一个 web 项目，编译后放到此项目）
 -   调试本地 html  
-    执行`npm run html`，并在浏览器中打开`localhost:9000`可以实时调试本地 hmlt
+    执行`npm run html`，并在浏览器中打开`localhost:9000`可以实时调试本地html
 -   编译 html  
     执行`npm run build`，会同时编译 auto 的代码和 html 代码，在`dist`目录下生成编译文件
 
