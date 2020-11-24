@@ -103,7 +103,7 @@ module.exports = (env, argv) => {
                 template: path.resolve(__dirname, "../src/html/index.html"),
             }),
             new MiniCssExtractPlugin({
-                filename: 'css/[name].css',
+                filename: '[name].css',
                 chunkFilename: '[id].css',
                 ignoreOrder: false
             }),
